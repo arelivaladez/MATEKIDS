@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="division.css" type="text/css">
+    <title>MATEKIDS</title>
+</head>
+<body>
+    <!-- Menu de hamburguesa -->
+      <nav class="nav">
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="menu-icon">&#9776;</label> <!-- icono de menu  -->
+
+        <ul class="menu"> <!-- lista de menu -->
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="sumas.html">Suma</a></li>
+        <li><a href="resta.html">Resta</a></li>
+        <li><a href="multiplicacion.html">Multiplicación</a></li>
+        <li><a href="division.html">División</a></li>
+        <li><a href="nosotros.html">Nosotros</a></li>
+        </ul>
+    </nav>
+
+     <button class="my-button5"><b>DIVISIÓN</b></button> <!-- titulo de operacion -->
+    <div class="Logo2">
+        <img src="img/logo.png" alt=""> <!-- logo de matekids -->
+    </div>
+    
+    <p></p>
+    <p></p>
+
+    <div class="container">
+        
+        <div class="level-selector">
+            <button class="level-btn active" data-level="1">Nivel 1</button>
+            <button class="level-btn" data-level="2">Nivel 2</button>
+            <button class="level-btn" data-level="3">Nivel 3</button>
+        </div>
+        
+        <div class="math-problem" id="problem">6 + 3 = ?</div>
+        
+        <div class="options" id="options">
+            <button class="option">7</button>
+            <button class="option">8</button>
+            <button class="option">9</button>
+            <button class="option">10</button>
+        </div>
+        
+        <div class="message" id="message"></div>
+        
+        <div class="score" id="score">Puntaje: 0</div>
+    </div>
+    
+     <div class="animals-delfi">
+        <img src="img/delfin.png" alt="leon">
+        <img src="img/mant.png" alt="palmas">
+    </div>
+
+    <script>
+        const problemElement = document.getElementById('problem');
+        const optionsElement = document.getElementById('options');
+        const messageElement = document.getElementById('message');
+        const scoreElement = document.getElementById('score');
+        const operationButtons = document.querySelectorAll('.operation-btn');
+        const levelButtons = document.querySelectorAll('.level-btn');
+        
+        let currentOperation = 'division';
+        let currentLevel = 1;
+        let score = 0;
+        let correctAnswer = 0;
+        
+        // Sonidos
+        const correctSound = new Audio('sonido/bien.mp3');
+        const incorrectSound = new Audio('sonido/mal.mp3');
+
+        // Inicializar el juego
+        generateProblem();
+        
+        // Event listeners para las operaciones
+        operationButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                operationButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                currentOperation = button.getAttribute('data-operation');
+                generateProblem();
+            });
+        });
+        
+        // Event listeners para los niveles
+        levelButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                levelButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                currentLevel = parseInt(button.getAttribute('data-level'));
+                generateProblem();
+            });
+        });
+        
+        // Event listener para las opciones de respuesta
+        optionsElement.addEventListener('click', (e) => {
+            if (e.target.classList.contains('option')) {
+                const selectedAnswer = parseInt(e.target.textContent);
+                checkAnswer(selectedAnswer);
+            }
+        });
+        
+        function generateProblem() {
+            let num1, num2, operator, problem;
+            
+            // Definir rango según el nivel
+            let max;
+            switch (currentLevel) {
+                case 1:
+                    max = 10;
+                    break;
+                case 2:
+                    max = 20;
+                    break;
+                case 3:
+                    max = 50;
+                    break;
+            }
+            
+            // Generar números aleatorios
+            num1 = Math.floor(Math.random() * max) + 1;
+            num2 = Math.floor(Math.random() * max) + 1;
+            
+            // Ajustar para cada operación
+            switch (currentOperation) {
+                case 'division':
+                    // Generar divisiones exactas
+                    num2 = Math.floor(Math.random() * 10) + 1;
+                    correctAnswer = Math.floor(Math.random() * (max / 2)) + 1;
+                    num1 = num2 * correctAnswer;
+                    operator = '÷';
+                    break;
+            }
+            
+            problem = `${num1} ${operator} ${num2} = ?`;
+            problemElement.textContent = problem;
+            
+            // Generar opciones
+            generateOptions(correctAnswer);
+            
+            // Limpiar mensaje
+            messageElement.textContent = '';
+            messageElement.className = 'message';
+        }
+        
+        function generateOptions(correct) {
+            const options = [correct];
+            const range = currentLevel === 1 ? 5 : (currentLevel === 2 ? 10 : 20);
+            
+            // Generar 3 opciones incorrectas
+            while (options.length < 4) {
+                const offset = Math.floor(Math.random() * range) + 1;
+                const sign = Math.random() < 0.5 ? 1 : -1;
+                const newOption = correct + (offset * sign);
+                
+                if (newOption > 0 && !options.includes(newOption)) {
+                    options.push(newOption);
+                }
+            }
+            
+            // Mezclar opciones
+            shuffleArray(options);
+            
+            // Actualizar opciones en HTML
+            optionsElement.innerHTML = '';
+            options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option';
+                button.textContent = option;
+                optionsElement.appendChild(button);
+            });
+        }
+        
+        function checkAnswer(selected) {
+            if (selected === correctAnswer) {
+                messageElement.textContent = '¡Correcto!';
+                messageElement.className = 'message correct';
+                score++;
+                scoreElement.textContent = `Puntaje: ${score}`;
+                createConfetti();
+                correctSound.play();
+                
+                // Breve pausa antes del siguiente problema
+                setTimeout(generateProblem, 1500);
+            } else {
+                messageElement.textContent = '¡Incorrecto! Intentemos otra operación';
+                messageElement.className = 'message incorrect';
+                incorrectSound.play();
+                
+                // Generar una nueva operación después de un error
+                setTimeout(generateProblem, 1500);
+            }
+        }
+        
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.backgroundColor = getRandomColor();
+                confetti.style.animationDelay = `${Math.random() * 3}s`;
+                document.body.appendChild(confetti);
+                
+                // Eliminar confeti después de la animación
+                setTimeout(() => {
+                    confetti.remove();
+                }, 3000);
+            }
+        }
+        
+        function getRandomColor() {
+            const colors = ['#ff6b6b', '#4ecdc4', '#ffe66d', '#118ab2', '#06d6a0', '#ffd166', '#ef476f'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+    </script>
+</body>
+</html>

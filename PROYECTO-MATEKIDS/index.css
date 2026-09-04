@@ -1,0 +1,113 @@
+/** PÁGINA PRINCIPAL **/
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background-color: #D6CFCF;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+    color: #5a5a5a;
+}
+
+/** Título **/
+.my-button {
+    padding: 30px 100px;
+    font-style: normal;
+    background-color: #000;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+/** Enlace "NOSOTROS" estilo botón **/
+.nosotros {
+    display: inline-block;
+    padding: 20px 20px;
+    font-style: normal;
+    background-color: #ffc677;
+    color: black;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    
+}
+
+/** Botones de operaciones **/
+.botones-container {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+    margin-top: 40px;
+    border-radius: 30px;
+}
+
+.boton {
+    background-color: pink;
+    color: black;
+    padding: 20px 30px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 30px;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+/** Imágenes de animales **/
+.animals {
+    position: relative;
+    bottom: 10px;
+    display: flex;
+    top: -50px;
+    bottom: 10px;
+    justify-content: space-between;
+    width: 95%;
+}
+.animals img {
+    width: 200px;
+}
+
+/** Logo **/
+.Logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: auto;
+}
+.Logo img {
+    width: 140px;
+}
+/**Responsiva**/
+@media (max-width: 600px) {
+  .my-button {
+    font-size: 1.2rem;
+    padding: 20px 80px;;
+  }
+
+  .nosotros{
+    width: 50px;
+    font-size: 0.7rem;
+  }
+
+  .boton {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .Logo img {
+    width: 100px;
+  }
+
+  .animals img {
+    width: 120px;
+    margin-top: 100px;
+  }
+}

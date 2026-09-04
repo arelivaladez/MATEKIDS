@@ -1,0 +1,176 @@
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background-color: #D6CFCF;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+    overflow-x: hidden;
+}
+
+/**Titulo de suma**/
+.my-button6 {
+    padding: 30px 100px;
+    font-style: normal;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+/**Diseño de cuadrado**/
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #f6e4e4;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.parrafo {
+    width: 80%; 
+    margin: 0 auto; 
+    text-align: justify; 
+}
+
+
+ /**imagenes**/
+.animals-ani {
+    position: absolute;
+    bottom: 10px;
+    top: 440px;
+    display: flex;
+    justify-content: space-between;
+    width: 99%;
+}
+.animals-ani img {
+    width: 400px;
+    height: 300px;
+}
+
+
+
+/**Logo**/
+.Logo2{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px; 
+    height: auto;
+}
+.Logo2 img {
+    width: 140px;
+}
+
+/**MENU**/
+
+
+.nav {
+  padding: 10px;
+  position: relative;
+  text-align: right;
+}
+
+.menu-icon {
+  font-size: 30px;
+  color: black;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.menu-toggle {
+  display: none;
+}
+
+.menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 50px;
+  right: 70px; 
+  width: 150px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.menu li a {
+  text-decoration: none;
+  color: black;
+  padding: 10px;
+  display: block;
+ 
+}
+
+/* Mostrar menú cuando el checkbox está activado */
+.menu-toggle:checked + .menu-icon + .menu {
+  display: flex;
+}
+
+
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes sway {
+    0%, 100% {
+        transform: rotate(-5deg);
+    }
+    50% {
+        transform: rotate(5deg);
+    }
+}
+
+/**Responsiva**/
+@media (max-width: 768px) {
+  .menu {
+    display: none;
+    flex-direction: column;
+    background-color: #ffe0c9;
+    position: absolute;
+    top: 45px;
+    left: 0;
+    width: 100%;
+  }
+
+  .menu-icon {
+    display: block;
+  }
+
+  .menu-toggle:checked + .menu-icon + .menu {
+    display: flex;
+  }
+
+  .Logo2 img {
+    width: 90px;
+  }
+
+  .my-button6 {
+    font-size: 24px;
+  }
+
+  .animals-ani img {
+    width: 100px;
+    height: 100px;
+}
+}
+
+@media (max-width: 480px) {
+  .option {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .level-btn {
+    width: 100%;
+  }
+}
